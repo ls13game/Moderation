@@ -19,6 +19,7 @@ public class cmdkick implements Command {
         String member = event.getMessage().getMentionedMembers().get(0).getUser().getId();
         EmbedBuilder error = new EmbedBuilder();
         EmbedBuilder success = new EmbedBuilder();
+        EmbedBuilder kick = new EmbedBuilder();
         if(event.getMember().hasPermission(Permission.KICK_MEMBERS)){
             if (args.length <1){
                 error.setTitle("Error");
@@ -41,11 +42,16 @@ public class cmdkick implements Command {
                 });
                 return;
             }
+            kick.setColor(Color.GREEN);
+            kick.setTitle("Du wurdest gekickt");
+            kick.setDescription("Du wurdest vom server ` "+event.getGuild().getName()+" ` gekickt um zu joinen klicke [Hier]("+event.getTextChannel().createInvite().setMaxUses(1).complete().getURL()+")");
+            event.getJDA().getUserById(member).openPrivateChannel().complete().sendMessage(kick.build()).queue();
             event.getGuild().getController().kick(member).queue();
             success.setColor(Color.green);
             success.setTitle("Erfolgreich");
             success.setDescription("Member "+event.getGuild().getMemberById(member).getAsMention()+" wurde erfolgreich gekickt");
             event.getTextChannel().sendMessage(success.build()).queue(msg -> {msg.delete().queueAfter(20, TimeUnit.SECONDS);});
+
 
         } else {
             error.setColor(Color.RED);
