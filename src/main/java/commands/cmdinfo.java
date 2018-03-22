@@ -25,7 +25,7 @@ public class cmdinfo implements Command {
                                 "**[INVITE](https://discordapp.com/api/oauth2/authorize?client_id=415154495039864834&permissions=263715926&scope=bot)\n" +
                                 "[UPVOTE](https://discordbots.org/bot/415154495039864834)**\n" +
                                 "**[SUPPORT SERVER](https://discord.gg/4nnf8qE)**")
-                        .setFooter("Coded by ls13game®#8562", "https://cdn.discordapp.com/avatars/235395943619493888/20dd0409d45d90ddf394b3287633373e.png")
+                        .setFooter("Coded by ls13game®#8562 & oskar#7402", e.getJDA().getSelfUser().getAvatarUrl())
                         .build()
         ).complete();
     }

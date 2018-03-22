@@ -1,40 +1,31 @@
 package commands;
 
 import UTIL.STATIC;
-import core.permsCore;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
-import java.util.Arrays;
-import java.util.List;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by zekro on 12.04.2017 / 11:05
- * supremeBot/commands
- * © zekro 2017
- */
-
-public class cmdsay implements Command {
+public class cmdstop implements Command {
     @Override
     public boolean called(String[] args, MessageReceivedEvent event) {
         return false;
     }
 
     @Override
-    public void action(String[] args, MessageReceivedEvent event) {
+    public void action(String[] args, MessageReceivedEvent event) throws ParseException, IOException {
+        EmbedBuilder succes = new EmbedBuilder();
         EmbedBuilder error = new EmbedBuilder();
-        if (event.getAuthor().getId().equals(STATIC.DEV) || event.getAuthor().getId().equals(STATIC.DEV2)){
-            String content = String.join(" ", args);
-            event.getTextChannel().sendMessage(content).queue();
-            return;
-        }
+        event.getMessage().delete().queue();
+        if (event.getAuthor().getId().equals(STATIC.DEV)|| event.getAuthor().getId().equals(STATIC.DEV2)){
+            succes.setColor(Color.RED);
+            succes.setTitle("\uD83D\uDD0C Shutdown...");
+            event.getTextChannel().sendMessage(succes.build()).queue();
+            event.getJDA().shutdown();
 
-        if (event.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
-            String content = String.join(" ", args);
-            event.getTextChannel().sendMessage(content).queue();
         } else {
             error.setColor(Color.RED);
             error.setTitle("Error");
@@ -45,12 +36,10 @@ public class cmdsay implements Command {
 
     @Override
     public void executed(boolean sucess, MessageReceivedEvent event) {
-        event.getMessage().delete().queue();
     }
 
     @Override
     public String help() {
         return null;
     }
-
 }

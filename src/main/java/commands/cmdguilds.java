@@ -12,7 +12,7 @@ public class cmdguilds implements Command {
 
     @Override
     public void action(String[] args, MessageReceivedEvent event) {
-        if (event.getAuthor().getId().equals(STATIC.DEV)){
+        if (event.getAuthor().getId().equals(STATIC.DEV) || event.getAuthor().getId().contains(STATIC.DEV2)){
             String out = "\nThis bot is running on following servers: \n";
 
             for (Guild g : event.getJDA().getGuilds() ) {
