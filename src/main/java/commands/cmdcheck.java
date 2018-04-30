@@ -14,12 +14,12 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class cmdcheck implements Command {
-    @Override
+
     public boolean called(String[] args, MessageReceivedEvent event) {
         return false;
     }
 
-    @Override
+
     public void action(String[] args, MessageReceivedEvent event) {
         EmbedBuilder created = new EmbedBuilder();
         EmbedBuilder error = new EmbedBuilder();
@@ -67,12 +67,12 @@ public class cmdcheck implements Command {
         }
     }
 
-    @Override
+
     public void executed(boolean sucess, MessageReceivedEvent event) {
         event.getMessage().delete().queue();
     }
 
-    @Override
+
     public String help() {
         return null;
     }

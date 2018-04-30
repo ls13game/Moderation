@@ -1,6 +1,7 @@
 package commands;
 
 import UTIL.STATIC;
+import anderes.Dev;
 import listeners.gameHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
@@ -19,17 +20,18 @@ import java.util.concurrent.TimeUnit;
 public class cmdGame implements Command {
 
 
-    @Override
+
     public boolean called(String[] args, MessageReceivedEvent event) {
         return false;
     }
 
-    @Override
+
     public void action(String[] args, MessageReceivedEvent event) {
         TextChannel tc = event.getTextChannel();
 
-     if (event.getAuthor().getId().equals(STATIC.DEV) || event.getAuthor().getId().equals(STATIC.DEV2)) {
-            if (args.length < 1) {
+     if (Dev.isDev(event.getAuthor())) {
+
+         if (args.length < 1) {
                 error(tc, help());
 
             } else {
@@ -39,12 +41,13 @@ public class cmdGame implements Command {
                         gameHandler.stop();
                         set(args, event.getTextChannel(), event.getMember());
                         success(tc, "Successfully changed Game!");
-
                         break;
+
                     case "default":
                         gameHandler.start();
                         success(tc, "Successfully set game to default!");
                         break;
+
                     default:
                         error(tc, help());
                         break;
@@ -57,12 +60,12 @@ public class cmdGame implements Command {
 
 
 
-    @Override
+
     public void executed(boolean sucess, MessageReceivedEvent event) {
         event.getMessage().delete().queue();
     }
 
-    @Override
+
     public String help() {
         String help = STATIC.PREFIX + "game set (Game) \n" +
                         STATIC.PREFIX + "game default \n";

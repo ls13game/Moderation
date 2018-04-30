@@ -2,17 +2,17 @@ package core;
 
 import UTIL.STATIC;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
 import java.util.ArrayList;
 
 public class commandParser {
-    public static commandContainer parser(String raw, MessageReceivedEvent event) {
+
+    public commandContainer parse(String raw, MessageReceivedEvent event) {
 
         String beheaded = raw.replaceFirst(STATIC.PREFIX, "");
         String[] splitBeheaded = beheaded.split(" ");
         String invoke = splitBeheaded[0];
         ArrayList<String> split = new ArrayList<>();
-        for ( String s : splitBeheaded ) {
+        for (String s : splitBeheaded) {
             split.add(s);
         }
         String[] args = new String[split.size() - 1];
@@ -21,7 +21,8 @@ public class commandParser {
         return new commandContainer(raw, beheaded, splitBeheaded, invoke, args, event);
     }
 
-    public static class commandContainer {
+
+    public class commandContainer {
 
         public final String raw;
         public final String beheaded;
@@ -40,4 +41,5 @@ public class commandParser {
         }
 
     }
+
 }

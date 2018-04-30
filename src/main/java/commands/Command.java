@@ -10,5 +10,4 @@ public interface Command {
     void action(String[] args, MessageReceivedEvent event) throws ParseException, IOException;
     void executed(boolean sucess, MessageReceivedEvent event);
     String help();
-
 }

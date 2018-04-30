@@ -1,6 +1,7 @@
 package commands;
 
 import UTIL.STATIC;
+import anderes.Dev;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -19,18 +20,18 @@ import java.util.concurrent.TimeUnit;
 
 
 public class cmdMsgOwner implements Command {
-    @Override
+
     public boolean called(String[] args, MessageReceivedEvent event) {
         return false;
     }
 
-    @Override
+
     public void action(String[] args, MessageReceivedEvent event) throws ParseException, IOException {
 
         TextChannel tc = event.getTextChannel();
 
 
-         if (event.getAuthor().getId().equals(STATIC.DEV2) || event.getAuthor().getId().contains(STATIC.DEV)){
+         if (Dev.isDev(event.getAuthor())){
             if (args.length < 1) {
                 error(tc, help());
                 return;
@@ -51,12 +52,12 @@ public class cmdMsgOwner implements Command {
 
     }
 
-    @Override
+
     public void executed(boolean sucess, MessageReceivedEvent event) {
         event.getMessage().delete().queue();
     }
 
-    @Override
+
     public String help() {
         String help = STATIC.PREFIX + "MsgOwner (text)";
         return help;

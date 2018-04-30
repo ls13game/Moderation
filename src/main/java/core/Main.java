@@ -1,19 +1,26 @@
 package core;
 
-import MySQLTest.MySQLAccess;
+import BotGuild.ApplicationManager;
+import MySQL.mySQL;
 import UTIL.SECRETS;
 import commands.*;
+import insults.insultListener;
 import listeners.*;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.entities.Game;
 
 import javax.security.auth.login.LoginException;
 
-public class Main {
+/**
+ * Created by Oskar
+ * on 21.04.2018
+ * for Moderation
+ * github.com/oskardevkappa/
+ */
 
+
+public class Main {
     static public JDA jda;
     public static JDABuilder builder;
     public static String CommandSize;
@@ -34,12 +41,19 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        //DISCORDBOTS.ORG
+        //DiscordBotListAPI api = new DiscordBotListAPI.Builder()
+        //      .token(SECRETS.DTOKEN)
+        //    .build();
+
+        //voteListener vote = new voteListener(api);
+
 
 
         //MYSQL
-         /**   MySQLAccess sql = new MySQLAccess();
-            sql.readDataBase();*/
-        }
+        /*        MySQLConnection.getInstance();*/
+        mySQL.test();
+    }
 
 
 
@@ -57,7 +71,7 @@ public class Main {
         //MODS
         commandHandler.commands.put("clear",new cmdClear());
         commandHandler.commands.put("say",new cmdsay());
-
+        commandHandler.commands.put("ebsay", new cmdEbsay());
 
 
         commandHandler.commands.put("kick",new cmdkick());
@@ -70,23 +84,35 @@ public class Main {
         commandHandler.commands.put("userinfo",new cmduserinfo());
         commandHandler.commands.put("serverinfo",new cmdguildinfo());
         commandHandler.commands.put("stop",new cmdstop());
-        //commandHandler.commands.put("ac",new cmdautochannel());
+        commandHandler.commands.put("ac",new cmdautochannel());
+        commandHandler.commands.put("autochannel", new cmdautochannel());
         commandHandler.commands.put("game", new cmdGame());
+        //commandHandler.commands.put("linkreport",new cmdlinkreport());
+        commandHandler.commands.put("twitter",new cmdTwitter());
+        commandHandler.commands.put("anleitung",new cmdanleitung());
+        commandHandler.commands.put("perms",new cmdperms());
+        commandHandler.commands.put("channels",new cmdchannels());
+        //commandHandler.commands.put("addinsult",new addinsult());
         CommandSize = String.valueOf(commandHandler.commands.size());
         //commandHandler.commands.put("votet",new cmdvotet());
         System.out.println(CommandSize + " Commands Geladen");
     }
 
-    public static void addListeners() {
+    public static void addListeners() {/*
+        builder.addEventListener(new reactionListener());*/
         builder.addEventListener(new commandListener());
-        builder.addEventListener(new reactionListener());
         builder.addEventListener(new linklistener());
         builder.addEventListener(new selflistener());
         builder.addEventListener(new leavelistener());
         builder.addEventListener(new joinlistener());
         builder.addEventListener(new botlistspace());
+        builder.addEventListener(new discordpw());
         builder.addEventListener(new autochannelhandler());
         builder.addEventListener(new onReady());
+        builder.addEventListener(new ApplicationManager());
+        /*        builder.addEventListener(new deletelistener());*/
+        // builder.addEventListener(new privateMessage());
+        builder.addEventListener(new insultListener());
         System.out.println("Listener Geladen");
 
     }

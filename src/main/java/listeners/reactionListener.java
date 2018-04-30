@@ -1,3 +1,4 @@
+/*
 package listeners;
 
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
@@ -25,3 +26,4 @@ public class reactionListener extends ListenerAdapter {
         }
     }
 }
+*/

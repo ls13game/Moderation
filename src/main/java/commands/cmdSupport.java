@@ -8,12 +8,12 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.awt.*;
 
 public class cmdSupport implements Command {
-    @Override
+
     public boolean called(String[] args, MessageReceivedEvent event) {
         return false;
     }
 
-    @Override
+
     public void action(String[] args, MessageReceivedEvent event) {
         EmbedBuilder support = new EmbedBuilder();
         support.setColor(Color.cyan);
@@ -25,12 +25,12 @@ public class cmdSupport implements Command {
         message.addReaction(STATIC.OK).complete();
     }
 
-    @Override
+
     public void executed(boolean sucess, MessageReceivedEvent event) {
         event.getMessage().delete().queue();
     }
 
-    @Override
+
     public String help() {
         return null;
     }

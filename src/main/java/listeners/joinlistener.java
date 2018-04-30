@@ -8,6 +8,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Category;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import net.dv8tion.jda.core.managers.GuildController;
 import org.json.JSONObject;
@@ -23,8 +24,13 @@ import java.util.TimerTask;
 
 public class joinlistener extends ListenerAdapter {
     EmbedBuilder anleitung = new EmbedBuilder();
-    @Override
+    EmbedBuilder join = new EmbedBuilder().setColor(Color.BLUE).setTitle("New Server");
+
     public void onGuildJoin(GuildJoinEvent event) {
+        join.setDescription("Neuer Server Name: " +event.getGuild().getName() +"\n Owner: "+event.getGuild().getOwner().getUser().getAsMention());
+        event.getJDA().getTextChannelById("426746617295798272").sendMessage(join.build()).queue();
+
+
         anleitung.setColor(Color.GREEN);
         anleitung.setTitle("Anleitung");
         anleitung.setDescription("Hallo ich bin der Moderationsbot\n" +
@@ -57,6 +63,25 @@ public class joinlistener extends ListenerAdapter {
             }
         }, 500);
 
+        String token = SECRETS.DTOKEN;
+        String botId = "415154495039864834";
+
+        int serverCount = event.getJDA().getGuilds().size();
+
+        JSONObject obj = new JSONObject()
+                .put("server_count", serverCount);
+
+        try {
+            Unirest.post("https://discordbots.org/api/bots/" + botId + "/stats")
+                    .header("Authorization", token)
+                    .header("Content-Type", "application/json")
+                    .body(obj.toString())
+                    .asJson();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+    }
+    public void onGuildLeave(GuildLeaveEvent event) {
         String token = SECRETS.DTOKEN;
         String botId = "415154495039864834";
 

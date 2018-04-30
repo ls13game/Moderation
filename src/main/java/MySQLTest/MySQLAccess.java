@@ -33,7 +33,7 @@ public class MySQLAccess {
         preparedStatement.setString(1, "Test");
         preparedStatement.setString(2, "TestEmail");
         preparedStatement.setString(3, "TestWebpage");
-        preparedStatement.setDate(4, new java.sql.Date(2009, 12, 11));
+        //preparedStatement.setDate(4, new java.sql.Date(2009, 12, 11));
         preparedStatement.setString(5, "TestSummary");
         preparedStatement.setString(6, "TestComment");
         preparedStatement.executeUpdate();

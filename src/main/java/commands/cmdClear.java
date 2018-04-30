@@ -8,6 +8,8 @@ import net.dv8tion.jda.core.entities.MessageHistory;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,12 +24,12 @@ public class cmdClear implements Command {
             return 0;
         }
     }
-    @Override
+
     public boolean called(String[] args, MessageReceivedEvent event) {
         return false;
     }
 
-    @Override
+
     public void action(String[] args, MessageReceivedEvent event) {
         if (event.getMember().hasPermission(Permission.MANAGE_CHANNEL)) {
             int numb = getInt(args[0]);
@@ -72,11 +74,20 @@ public class cmdClear implements Command {
         }
     }
 
-    @Override
+
     public void executed(boolean sucess, MessageReceivedEvent event) {
+        SimpleDateFormat date=new SimpleDateFormat(
+                "HH:mm");
+        String date1=date.format(new Date());
+        EmbedBuilder log = new EmbedBuilder().setColor(Color.YELLOW).setTitle("LOG").setFooter("Um: "+date1,event.getJDA().getSelfUser().getAvatarUrl()).setAuthor(event.getAuthor().getName(),null,event.getAuthor().getAvatarUrl());
+        log.setDescription("Command `clear` wurde ausgeführt");
+        event.getMessage().delete().queue();
+        if (event.getGuild().getTextChannelsByName("log",false).size() >0){
+            event.getGuild().getTextChannelsByName("log",false).get(0).sendMessage(log.build()).queue();
+        }
     }
 
-    @Override
+
     public String help() {
         return null;
     }
